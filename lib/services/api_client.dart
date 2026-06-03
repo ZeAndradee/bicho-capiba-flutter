@@ -6,8 +6,7 @@ import 'token_store.dart';
 final apiClientProvider = Provider<Dio>((ref) {
   final baseUrl = const String.fromEnvironment(
     'API_URL',
-    defaultValue:
-        'https://3471-2804-389-30db-b65b-c6f-671a-8af5-a312.ngrok-free.app/',
+    defaultValue: 'https://bicho-capiba-back.onrender.com/',
   );
   final dio = Dio(
     BaseOptions(
