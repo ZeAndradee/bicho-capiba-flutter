@@ -21,10 +21,10 @@ class CloseAnimalsFeed extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<CloseAnimalsFeed> createState() => _CloseAnimalsFeedState();
+  ConsumerState<CloseAnimalsFeed> createState() => CloseAnimalsFeedState();
 }
 
-class _CloseAnimalsFeedState extends ConsumerState<CloseAnimalsFeed> {
+class CloseAnimalsFeedState extends ConsumerState<CloseAnimalsFeed> {
   final List<Animal> _animals = [];
   bool _loading = true;
   bool _loadingMore = false;
@@ -146,6 +146,8 @@ class _CloseAnimalsFeedState extends ConsumerState<CloseAnimalsFeed> {
     }
   }
 
+  Future<void> reload() => _loadAnimals(page: 1, reset: true);
+
   @override
   Widget build(BuildContext context) {
     final filtered = _filtered;
@@ -191,17 +193,16 @@ class _CloseAnimalsFeedState extends ConsumerState<CloseAnimalsFeed> {
   }
 
   Widget _resetButton() {
-    return OutlinedButton.icon(
+    return TextButton(
       onPressed: _reset,
-      icon: const Icon(LucideIcons.refreshCw, size: 18),
-      label: const Text('Reset'),
-      style: OutlinedButton.styleFrom(
+      style: TextButton.styleFrom(
         foregroundColor: AppColors.orangeCapiba,
-        side: const BorderSide(color: AppColors.orangeCapiba),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        padding: EdgeInsets.zero,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       ),
+      child: const Text('Limpar filtros'),
     );
   }
 

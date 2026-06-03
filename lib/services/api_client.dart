@@ -6,7 +6,8 @@ import 'token_store.dart';
 final apiClientProvider = Provider<Dio>((ref) {
   final baseUrl = const String.fromEnvironment(
     'API_URL',
-    defaultValue: 'https://bicho-capiba-back.onrender.com/',
+    defaultValue:
+        'https://3471-2804-389-30db-b65b-c6f-671a-8af5-a312.ngrok-free.app/',
   );
   final dio = Dio(
     BaseOptions(
@@ -33,10 +34,7 @@ final apiClientProvider = Provider<Dio>((ref) {
         if (setCookie != null && setCookie.isNotEmpty) {
           final authCookie = setCookie
               .map((c) => c.split(';').first.trim())
-              .firstWhere(
-                (c) => c.startsWith('auth_token='),
-                orElse: () => '',
-              );
+              .firstWhere((c) => c.startsWith('auth_token='), orElse: () => '');
           if (authCookie.isNotEmpty) {
             await tokenStore.write(authCookie);
           }

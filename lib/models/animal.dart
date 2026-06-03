@@ -148,6 +148,8 @@ class Animal {
     'ave': 'bird',
     'coelho': 'rabbit',
     'roedor': 'rat',
+    'cobra': 'snake',
+    'serpente': 'snake',
   };
 
   static String _especieKey(dynamic especie) {

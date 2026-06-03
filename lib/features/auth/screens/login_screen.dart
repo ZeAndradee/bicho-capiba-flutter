@@ -23,6 +23,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String? _error;
 
   @override
+  void initState() {
+    super.initState();
+    _email.addListener(_onChanged);
+    _password.addListener(_onChanged);
+  }
+
+  void _onChanged() => setState(() {});
+
+  @override
   void dispose() {
     _email.dispose();
     _password.dispose();
@@ -67,7 +76,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           label: 'E-mail',
           hint: 'seu@email.com',
           controller: _email,
-          icon: Icons.mail_outline,
           keyboardType: TextInputType.emailAddress,
           autofocus: true,
           onSubmitted: (_) {},
@@ -77,7 +85,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           label: 'Senha',
           hint: 'Digite sua senha',
           controller: _password,
-          icon: Icons.lock_outline,
           obscure: true,
           textInputAction: TextInputAction.done,
           onSubmitted: (_) => _submit(),

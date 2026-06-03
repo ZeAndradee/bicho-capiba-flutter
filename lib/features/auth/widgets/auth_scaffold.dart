@@ -44,9 +44,10 @@ class AuthScaffold extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 48),
                         Image.asset(
-                          'assets/images/BichoCapibaLogo.png',
-                          height: 40,
+                          'assets/images/BichoOnlyLogo.png',
+                          height: 44,
                           alignment: Alignment.centerLeft,
                         ),
                         const SizedBox(height: 24),

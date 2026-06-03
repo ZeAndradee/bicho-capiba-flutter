@@ -53,6 +53,11 @@ class AuthController extends Notifier<AuthState> {
     state = AuthState(AuthStatus.authenticated, user);
   }
 
+  Future<void> refreshUser() async {
+    final user = await _service.me();
+    state = AuthState(AuthStatus.authenticated, user);
+  }
+
   Future<void> logout() async {
     await _service.logout();
     state = const AuthState(AuthStatus.unauthenticated);

@@ -7,6 +7,7 @@ class AuthButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool loading;
   final bool filled;
+  final Color color;
 
   const AuthButton({
     super.key,
@@ -14,13 +15,14 @@ class AuthButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.filled = true,
+    this.color = AppColors.orangeCapiba,
   });
 
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null && !loading;
     final bg = filled
-        ? (enabled ? AppColors.orangeCapiba : AppColors.skeletonBase)
+        ? (enabled ? color : AppColors.skeletonBase)
         : Colors.transparent;
     final fg = filled
         ? Colors.white

@@ -8,23 +8,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.orangeCapiba,
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset('assets/images/BichoCapibaLogo.png', height: 48),
-            const SizedBox(height: 28),
-            const SizedBox(
-              width: 26,
-              height: 26,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.6,
-                valueColor: AlwaysStoppedAnimation(AppColors.orangeCapiba),
-              ),
-            ),
-          ],
-        ),
+        child: Image.asset('assets/images/BichoOnlyLogo.png', height: 96),
       ),
     );
   }

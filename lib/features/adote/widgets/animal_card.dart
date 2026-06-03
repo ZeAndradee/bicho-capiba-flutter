@@ -30,32 +30,32 @@ class AnimalCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _imageBlock(),
-              const SizedBox(height: 10),
-              _nameRow(),
-              const SizedBox(height: 5),
-              _metaRow(),
-              const SizedBox(height: 4),
-              _locationRow(),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _imageBlock(),
+            const SizedBox(height: 10),
+            _nameRow(),
+            const SizedBox(height: 5),
+            _metaRow(),
+            const SizedBox(height: 4),
+            _ongRow(),
+          ],
         ),
       ),
     );
   }
 
   Widget _imageBlock() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(14),
-      child: AspectRatio(aspectRatio: 16 / 8, child: _image()),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: AspectRatio(aspectRatio: 16 / 8, child: _image()),
+      ),
     );
   }
 
@@ -83,35 +83,39 @@ class AnimalCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Text(
-                  animal.nome,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontFamily: AppFonts.title,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: AppColors.foreground,
+          child: GestureDetector(
+            onTap: onTap,
+            behavior: HitTestBehavior.opaque,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    animal.nome,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: AppFonts.title,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: AppColors.foreground,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(
-                  animal.idade,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textColor,
+                const SizedBox(width: 10),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    animal.idade,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(width: 8),
@@ -158,14 +162,25 @@ class AnimalCard extends StatelessWidget {
     );
   }
 
-  Widget _locationRow() {
+  Widget _ongRow() {
     return Row(
       children: [
         Expanded(
           child: Text(
-            '${animal.bairro}, ${animal.cidade}',
+            animal.ongNome ?? 'ONG não informada',
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 15, color: AppColors.textColor),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Icon(LucideIcons.mapPin, size: 14, color: AppColors.orangeCapiba),
+        const SizedBox(width: 3),
+        Text(
+          animal.distancia,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textColor,
           ),
         ),
       ],

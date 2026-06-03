@@ -27,6 +27,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   static final _emailRegex = RegExp(r'^\S+@\S+\.\S+$');
 
   @override
+  void initState() {
+    super.initState();
+    for (final c in [_name, _email, _password, _confirm]) {
+      c.addListener(_onChanged);
+    }
+  }
+
+  void _onChanged() => setState(() {});
+
+  bool get _valid =>
+      _name.text.trim().isNotEmpty &&
+      _email.text.trim().isNotEmpty &&
+      _password.text.isNotEmpty &&
+      _confirm.text.isNotEmpty;
+
+  @override
   void dispose() {
     _name.dispose();
     _email.dispose();
@@ -67,6 +83,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             email: _email.text,
             password: _password.text,
           );
+      if (mounted) {
+        final nome = _name.text.trim().split(' ').first;
+        context.go('/cadastro-sucesso?nome=${Uri.encodeComponent(nome)}');
+      }
     } on AuthException catch (e) {
       if (mounted) setState(() => _error = e.message);
     } catch (_) {
@@ -90,7 +110,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           label: 'Nome completo',
           hint: 'Seu nome',
           controller: _name,
-          icon: Icons.person_outline,
           keyboardType: TextInputType.name,
           autofocus: true,
         ),
@@ -99,7 +118,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           label: 'E-mail',
           hint: 'seu@email.com',
           controller: _email,
-          icon: Icons.mail_outline,
           keyboardType: TextInputType.emailAddress,
         ),
         const SizedBox(height: 16),
@@ -107,7 +125,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           label: 'Senha',
           hint: 'Mínimo 8 caracteres',
           controller: _password,
-          icon: Icons.lock_outline,
           obscure: true,
         ),
         const SizedBox(height: 16),
@@ -115,7 +132,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           label: 'Confirmar senha',
           hint: 'Repita sua senha',
           controller: _confirm,
-          icon: Icons.lock_outline,
           obscure: true,
           textInputAction: TextInputAction.done,
           onSubmitted: (_) => _submit(),
@@ -124,7 +140,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         AuthButton(
           label: 'Criar conta',
           loading: _loading,
-          onPressed: _submit,
+          onPressed: _valid ? _submit : null,
         ),
         const SizedBox(height: 20),
         Center(

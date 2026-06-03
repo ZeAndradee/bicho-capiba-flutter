@@ -6,6 +6,7 @@ class AuthUser {
   final String? cidade;
   final String? bairro;
   final bool isOng;
+  final Map<String, dynamic> raw;
 
   const AuthUser({
     required this.uuid,
@@ -15,6 +16,7 @@ class AuthUser {
     this.cidade,
     this.bairro,
     this.isOng = false,
+    this.raw = const {},
   });
 
   factory AuthUser.fromJson(Map<String, dynamic> json) {
@@ -26,8 +28,17 @@ class AuthUser {
       cidade: json['cidade'] as String?,
       bairro: json['bairro'] as String?,
       isOng: json['cnpj'] != null,
+      raw: json,
     );
   }
+
+  String? get dataNascimento => raw['dataNascimento'] as String?;
+  String? get cpf => raw['cpf'] as String?;
+  String? get cep => raw['cep'] as String?;
+  String? get rua => raw['rua'] as String?;
+  String? get numero => raw['numero']?.toString();
+  String? get complemento => raw['complemento'] as String?;
+  String? get estado => raw['estado'] as String?;
 
   String get displayName {
     final name = fullName?.trim();

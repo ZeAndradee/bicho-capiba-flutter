@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   Image.asset(
-                    'assets/images/BichoCapibaLogo.png',
+                    'assets/images/BichoCapibaBlackLogo.png',
                     height: 44,
                     alignment: Alignment.centerLeft,
                   ),

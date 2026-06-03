@@ -25,11 +25,11 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await _dio.post(
+      final response = await _dio.post(
         '/auth/login',
         data: {'email': email.trim(), 'password': password},
       );
-      return await me();
+      return _userFromResponse(response.data);
     } on DioException catch (e) {
       throw _mapError(e, {
         401: 'E-mail ou senha incorretos.',
@@ -43,7 +43,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await _dio.post(
+      final response = await _dio.post(
         '/auth/register',
         data: {
           'fullName': fullName.trim(),
@@ -51,8 +51,11 @@ class AuthService {
           'password': password,
         },
       );
-      return await me();
+      return _userFromResponse(response.data);
     } on DioException catch (e) {
+      if (_isDuplicateEmail(e)) {
+        throw const AuthException('Já existe uma conta com este e-mail.');
+      }
       throw _mapError(e, {
         409: 'Já existe uma conta com este e-mail.',
         422: 'Dados inválidos. Confira os campos e tente novamente.',
@@ -62,13 +65,7 @@ class AuthService {
 
   Future<AuthUser> me() async {
     final response = await _dio.get('/auth/me');
-    final data = response.data;
-    final json = data is Map<String, dynamic>
-        ? (data['authUser'] as Map<String, dynamic>? ??
-              data['user'] as Map<String, dynamic>? ??
-              data)
-        : <String, dynamic>{};
-    return AuthUser.fromJson(json);
+    return _userFromResponse(response.data);
   }
 
   Future<void> logout() async {
@@ -78,6 +75,26 @@ class AuthService {
     } finally {
       await _ref.read(tokenStoreProvider).clear();
     }
+  }
+
+  AuthUser _userFromResponse(dynamic data) {
+    final json = data is Map<String, dynamic>
+        ? (data['authUser'] as Map<String, dynamic>? ??
+              data['user'] as Map<String, dynamic>? ??
+              data)
+        : <String, dynamic>{};
+    return AuthUser.fromJson(json);
+  }
+
+  bool _isDuplicateEmail(DioException e) {
+    final data = e.response?.data;
+    final text = (data is Map ? (data['error'] ?? data['message']) : data)
+        ?.toString()
+        .toLowerCase();
+    if (text == null) return false;
+    return text.contains('duplicate') ||
+        text.contains('unique') ||
+        text.contains('já existe');
   }
 
   AuthException _mapError(DioException e, Map<int, String> messages) {

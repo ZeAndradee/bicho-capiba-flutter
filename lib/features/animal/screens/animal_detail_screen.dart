@@ -504,7 +504,7 @@ class _DetailBodyState extends ConsumerState<_DetailBody> {
         child: SizedBox(
           height: 52,
           child: FilledButton(
-            onPressed: () => _openWhatsApp(animal),
+            onPressed: () => context.push('/adotar', extra: animal),
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.greenCapiba,
               textStyle: const TextStyle(

@@ -6,15 +6,15 @@ import '../../../core/theme/app_theme.dart';
 class _FilterCard {
   final String title;
   final String especie;
-  final String imageAsset;
-  const _FilterCard(this.title, this.especie, this.imageAsset);
+  final IconData icon;
+  const _FilterCard(this.title, this.especie, this.icon);
 }
 
 const _filters = <_FilterCard>[
-  _FilterCard('Gatos', 'cat', 'assets/images/CatFilter.png'),
-  _FilterCard('Cachorros', 'dog', 'assets/images/DogFilter.png'),
-  _FilterCard('Coelhos', 'rabbit', 'assets/images/RabbitFilter.png'),
-  _FilterCard('Roedores', 'rat', 'assets/images/RatFilter.png'),
+  _FilterCard('Gatos', 'cat', LucideIcons.cat),
+  _FilterCard('Cachorros', 'dog', LucideIcons.dog),
+  _FilterCard('Coelhos', 'rabbit', LucideIcons.carrot),
+  _FilterCard('Roedores', 'rat', LucideIcons.rat),
 ];
 
 class FilterCarousel extends StatelessWidget {
@@ -65,9 +65,10 @@ class FilterCarousel extends StatelessWidget {
       isActive: isActive,
       onTap: () => onSelect(isActive ? '' : filter.especie),
       title: filter.title,
-      leading: Padding(
-        padding: const EdgeInsets.all(6),
-        child: Image.asset(filter.imageAsset, fit: BoxFit.contain),
+      leading: Icon(
+        filter.icon,
+        size: 38,
+        color: isActive ? AppColors.orangeCapiba : AppColors.textColor,
       ),
     );
   }

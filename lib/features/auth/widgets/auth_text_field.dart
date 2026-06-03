@@ -10,7 +10,7 @@ class AuthTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final bool obscure;
-  final IconData icon;
+  final IconData? icon;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onSubmitted;
   final bool autofocus;
@@ -20,7 +20,7 @@ class AuthTextField extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.controller,
-    required this.icon,
+    this.icon,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.obscure = false,
@@ -79,12 +79,15 @@ class _AuthTextFieldState extends State<AuthTextField> {
           ),
           child: Row(
             children: [
-              Icon(
-                widget.icon,
-                size: 20,
-                color: _focused ? AppColors.orangeCapiba : AppColors.textColor,
-              ),
-              const SizedBox(width: 10),
+              if (widget.icon != null) ...[
+                Icon(
+                  widget.icon,
+                  size: 20,
+                  color:
+                      _focused ? AppColors.orangeCapiba : AppColors.textColor,
+                ),
+                const SizedBox(width: 10),
+              ],
               Expanded(
                 child: TextField(
                   controller: widget.controller,
