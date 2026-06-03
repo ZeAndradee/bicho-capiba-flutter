@@ -43,7 +43,15 @@ class _FavoritesView extends ConsumerStatefulWidget {
 }
 
 class _FavoritesViewState extends ConsumerState<_FavoritesView> {
-  late final List<Animal> _animals = List.of(widget.initial);
+  late List<Animal> _animals = List.of(widget.initial);
+
+  @override
+  void didUpdateWidget(_FavoritesView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.initial, widget.initial)) {
+      _animals = List.of(widget.initial);
+    }
+  }
 
   Future<void> _remove(Animal animal) async {
     final removed = await showRemoveFavoriteSheet(

@@ -1,6 +1,6 @@
 {
-    "name": "bicho_capiba_flutter",
-    "short_name": "bicho_capiba_flutter",
+    "name": "Bicho Capiba",
+    "short_name": "Bicho Capiba",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

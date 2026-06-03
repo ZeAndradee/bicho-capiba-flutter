@@ -27,7 +27,7 @@ class RegisterSuccessScreen extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
-                    child: _CloseButton(onTap: () => context.go('/')),
+                    child: _CloseButton(onTap: () => context.go('/adote')),
                   ),
                   const Spacer(),
                   Image.asset(
@@ -61,7 +61,7 @@ class RegisterSuccessScreen extends StatelessWidget {
                   AuthButton(
                     label: 'Começar',
                     color: AppColors.greenCapiba,
-                    onPressed: () => context.go('/'),
+                    onPressed: () => context.go('/adote'),
                   ),
                   const SizedBox(height: 8),
                 ],
